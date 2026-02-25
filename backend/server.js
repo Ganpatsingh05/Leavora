@@ -9,6 +9,16 @@ const { connectDB, isMemoryDB } = require('./config/db');
 const { seedDB } = require('./seed/seed');
 
 const startServer = async () => {
+  // Validate required env vars in production
+  if (process.env.NODE_ENV === 'production') {
+    const required = ['MONGO_URI', 'JWT_SECRET', 'JWT_EXPIRE'];
+    const missing = required.filter((key) => !process.env[key]);
+    if (missing.length) {
+      console.error(`FATAL: Missing required environment variables: ${missing.join(', ')}`);
+      process.exit(1);
+    }
+  }
+
   // Connect to MongoDB (falls back to in-memory if local/remote unavailable)
   await connectDB();
 
@@ -31,7 +41,7 @@ const startServer = async () => {
     cors({
       origin: (origin, callback) => {
         // Allow requests with no origin (mobile, curl, etc.) in dev
-        if (!origin || allowedOrigins.includes(origin)) {
+        if ((!origin && process.env.NODE_ENV !== 'production') || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
           callback(new Error('Not allowed by CORS'));

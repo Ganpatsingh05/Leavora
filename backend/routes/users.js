@@ -106,6 +106,17 @@ router.put('/:id', protect, authorize('admin'), async (req, res) => {
   try {
     const { name, email, role, department, leaveBalance } = req.body;
 
+    // Input validation
+    if (email && !/^\S+@\S+\.\S+$/.test(email)) {
+      return res.status(400).json({ message: 'Invalid email format' });
+    }
+    if (role && !['admin', 'manager', 'employee'].includes(role)) {
+      return res.status(400).json({ message: 'Invalid role' });
+    }
+    if (leaveBalance !== undefined && (typeof leaveBalance !== 'number' || leaveBalance < 0)) {
+      return res.status(400).json({ message: 'Leave balance must be a non-negative number' });
+    }
+
     const user = await User.findById(req.params.id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -115,7 +126,7 @@ router.put('/:id', protect, authorize('admin'), async (req, res) => {
     if (email) user.email = email;
     if (role) user.role = role;
     if (department) user.department = department;
-    if (leaveBalance) user.leaveBalance = leaveBalance;
+    if (leaveBalance !== undefined) user.leaveBalance = leaveBalance;
 
     await user.save();
 

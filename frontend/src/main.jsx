@@ -6,13 +6,15 @@ import { ThemeProvider } from './context/ThemeContext'
 import { Toaster } from 'react-hot-toast'
 import './index.css'
 import App from './App.jsx'
+import ErrorBoundary from './components/ErrorBoundary.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <App />
+    <ErrorBoundary>
+      <BrowserRouter>
+        <ThemeProvider>
+          <AuthProvider>
+            <App />
           <Toaster
             position="top-right"
             toastOptions={{
@@ -35,5 +37,6 @@ createRoot(document.getElementById('root')).render(
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
+  </ErrorBoundary>
   </StrictMode>,
 )

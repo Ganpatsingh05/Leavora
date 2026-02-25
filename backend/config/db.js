@@ -14,6 +14,12 @@ const connectDB = async () => {
       console.log('Local/remote MongoDB not reachable, starting in-memory server...');
     }
 
+    // In production, fail fast — never use in-memory DB
+    if (process.env.NODE_ENV === 'production') {
+      console.error('FATAL: Cannot connect to MongoDB in production. Set a valid MONGO_URI.');
+      process.exit(1);
+    }
+
     // Fall back to in-memory MongoDB (dev only)
     try {
       const { MongoMemoryServer } = require('mongodb-memory-server');

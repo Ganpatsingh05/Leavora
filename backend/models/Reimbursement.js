@@ -56,4 +56,7 @@ const reimbursementSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+reimbursementSchema.index({ user: 1, status: 1 });
+reimbursementSchema.index({ createdAt: -1 });
+
 module.exports = mongoose.model('Reimbursement', reimbursementSchema);
