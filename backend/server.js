@@ -88,6 +88,11 @@ const startServer = async () => {
   app.use('/api/users', require('./routes/users'));
   app.use('/api/reimbursements', require('./routes/reimbursements'));
 
+  // Root route
+  app.get('/', (req, res) => {
+    res.json({ message: 'Leavora API is running', docs: '/api/health' });
+  });
+
   // Health check
   const mongoose = require('mongoose');
   app.get('/api/health', (req, res) => {
