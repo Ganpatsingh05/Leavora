@@ -40,8 +40,8 @@ const startServer = async () => {
   app.use(
     cors({
       origin: (origin, callback) => {
-        // Allow requests with no origin (mobile, curl, etc.) in dev
-        if ((!origin && process.env.NODE_ENV !== 'production') || allowedOrigins.includes(origin)) {
+        // Allow requests with no origin (direct visits, health checks, mobile, curl)
+        if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
           callback(new Error('Not allowed by CORS'));
