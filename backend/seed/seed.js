@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const User = require('../models/User');
 const Leave = require('../models/Leave');
+const Reimbursement = require('../models/Reimbursement');
 
 const seedDB = async () => {
   try {
     // Clear existing data
     await User.deleteMany({});
     await Leave.deleteMany({});
+    await Reimbursement.deleteMany({});
 
     // Create users
     const admin = await User.create({
@@ -119,6 +121,77 @@ const seedDB = async () => {
         reason: 'Annual family vacation',
         status: 'pending',
         days: 4,
+      },
+    ]);
+
+    // Create sample reimbursements
+    await Reimbursement.create([
+      {
+        user: emp1._id,
+        title: 'Client site travel',
+        category: 'travel',
+        amount: 4500,
+        date: new Date('2026-02-15'),
+        description: 'Cab fare and meals for client meeting in Pune',
+        status: 'pending',
+      },
+      {
+        user: emp1._id,
+        title: 'Keyboard & mouse purchase',
+        category: 'office_supplies',
+        amount: 3200,
+        date: new Date('2026-02-01'),
+        description: 'Purchased ergonomic keyboard and wireless mouse for WFH setup',
+        status: 'approved',
+        reviewedBy: manager._id,
+      },
+      {
+        user: emp2._id,
+        title: 'Design conference registration',
+        category: 'training',
+        amount: 8000,
+        date: new Date('2026-02-20'),
+        description: 'Registration fee for UX India 2026 design conference',
+        status: 'pending',
+      },
+      {
+        user: emp2._id,
+        title: 'Team lunch expense',
+        category: 'meals',
+        amount: 2800,
+        date: new Date('2026-01-28'),
+        description: 'Team lunch at restaurant for sprint celebration',
+        status: 'approved',
+        reviewedBy: manager._id,
+      },
+      {
+        user: emp3._id,
+        title: 'Figma Pro subscription',
+        category: 'software',
+        amount: 1500,
+        date: new Date('2026-02-10'),
+        description: 'Monthly Figma Pro license for design work',
+        status: 'rejected',
+        reviewedBy: manager._id,
+        reviewComment: 'Company already provides Figma licenses, please use the org account',
+      },
+      {
+        user: emp3._id,
+        title: 'Medical checkup',
+        category: 'medical',
+        amount: 5500,
+        date: new Date('2026-02-18'),
+        description: 'Annual health checkup at Apollo hospital',
+        status: 'pending',
+      },
+      {
+        user: manager._id,
+        title: 'Team offsite transport',
+        category: 'travel',
+        amount: 12000,
+        date: new Date('2026-02-05'),
+        description: 'Bus rental for engineering team offsite day trip',
+        status: 'pending',
       },
     ]);
 

@@ -76,6 +76,7 @@ const startServer = async () => {
   app.use('/api/auth', require('./routes/auth'));
   app.use('/api/leaves', require('./routes/leaves'));
   app.use('/api/users', require('./routes/users'));
+  app.use('/api/reimbursements', require('./routes/reimbursements'));
 
   // Health check
   const mongoose = require('mongoose');

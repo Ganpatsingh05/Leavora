@@ -7,6 +7,8 @@ import {
   HiOutlineUsers,
   HiOutlineLogout,
   HiOutlineCalendar,
+  HiOutlineReceiptTax,
+  HiOutlineCurrencyRupee,
   HiX,
 } from 'react-icons/hi';
 
@@ -23,20 +25,28 @@ const Sidebar = ({ isOpen, onClose }) => {
     { to: '/dashboard', icon: HiOutlineViewGrid, label: 'Dashboard' },
     { to: '/apply-leave', icon: HiOutlineDocumentAdd, label: 'Apply Leave' },
     { to: '/leave-history', icon: HiOutlineClipboardList, label: 'Leave History' },
+    { to: '/submit-reimbursement', icon: HiOutlineCurrencyRupee, label: 'Reimbursement' },
+    { to: '/reimbursement-history', icon: HiOutlineReceiptTax, label: 'My Claims' },
   ];
 
   const managerLinks = [
     { to: '/manager', icon: HiOutlineViewGrid, label: 'Dashboard' },
     { to: '/apply-leave', icon: HiOutlineDocumentAdd, label: 'Apply Leave' },
     { to: '/leave-history', icon: HiOutlineClipboardList, label: 'Leave History' },
+    { to: '/submit-reimbursement', icon: HiOutlineCurrencyRupee, label: 'Reimbursement' },
+    { to: '/reimbursement-history', icon: HiOutlineReceiptTax, label: 'My Claims' },
+    { to: '/manager/reimbursements', icon: HiOutlineReceiptTax, label: 'All Claims' },
   ];
 
   const adminLinks = [
     { to: '/admin', icon: HiOutlineViewGrid, label: 'Dashboard' },
     { to: '/admin/users', icon: HiOutlineUsers, label: 'Manage Users' },
     { to: '/admin/leaves', icon: HiOutlineCalendar, label: 'Leave History' },
+    { to: '/admin/reimbursements', icon: HiOutlineReceiptTax, label: 'All Claims' },
     { to: '/admin/apply-leave', icon: HiOutlineDocumentAdd, label: 'Apply Leave' },
     { to: '/admin/my-leaves', icon: HiOutlineClipboardList, label: 'My Leaves' },
+    { to: '/admin/submit-reimbursement', icon: HiOutlineCurrencyRupee, label: 'Reimbursement' },
+    { to: '/admin/my-reimbursements', icon: HiOutlineReceiptTax, label: 'My Claims' },
   ];
 
   const links =

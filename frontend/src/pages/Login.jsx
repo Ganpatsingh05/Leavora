@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import toast from 'react-hot-toast';
@@ -12,6 +12,7 @@ import {
   HiOutlineEye,
   HiOutlineEyeOff,
   HiOutlineArrowRight,
+  HiOutlineArrowLeft,
 } from 'react-icons/hi';
 
 const Login = () => {
@@ -90,9 +91,19 @@ const Login = () => {
 
       {/* Top bar */}
       <div className="relative z-30 flex items-center justify-between px-5 sm:px-8 py-4">
-        <div className="flex items-center gap-2.5">
-          <img src="/leavora_logo.png" alt="Leavora" className="w-9 h-9 rounded-lg object-contain" />
-          <span className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">Leavora</span>
+        <div className="flex items-center gap-4">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 dark:text-indigo-300 hover:text-indigo-600 dark:hover:text-white transition-colors"
+          >
+            <HiOutlineArrowLeft className="w-4 h-4" />
+            Home
+          </Link>
+          <div className="w-px h-5 bg-gray-200 dark:bg-indigo-800/40" />
+          <div className="flex items-center gap-2.5">
+            <img src="/leavora_logo.png" alt="Leavora" className="w-9 h-9 rounded-lg object-contain" />
+            <span className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">Leavora</span>
+          </div>
         </div>
         <button
           onClick={toggleTheme}
@@ -288,45 +299,47 @@ const Login = () => {
               <div className={`hidden md:flex absolute top-0 h-full w-1/2 transition-transform duration-700 ease-in-out z-20 ${
                 isSignUp ? 'translate-x-0' : 'translate-x-full'
               }`}>
-                <div className="w-full h-full bg-linear-to-br from-indigo-600 via-indigo-700 to-violet-800 flex items-center justify-center p-10 relative overflow-hidden">
-                  {/* Decorative */}
-                  <div className="absolute inset-0 overflow-hidden">
-                    <div className="absolute top-12 left-12 w-32 h-32 bg-white/8 rounded-full blur-2xl" />
-                    <div className="absolute bottom-12 right-12 w-48 h-48 bg-violet-400/15 rounded-full blur-3xl" />
-                    <div className="absolute inset-0 opacity-[0.04]" style={{
-                      backgroundImage: 'radial-gradient(circle, white 1px, transparent 1px)',
-                      backgroundSize: '24px 24px',
-                    }} />
+                <div className="w-full h-full flex items-center justify-center p-10 relative overflow-hidden bg-indigo-50 dark:bg-indigo-950">
+                  {/* Logo as background */}
+                  <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                    <img
+                      src="/leavora_logo.png"
+                      alt=""
+                      className="w-[65%] max-w-64 object-contain select-none opacity-20 dark:opacity-30"
+                    />
                   </div>
+                  {/* Subtle gradient overlay */}
+                  <div className="absolute inset-0 bg-linear-to-br from-indigo-100/60 via-transparent to-violet-100/60 dark:from-indigo-950/50 dark:via-transparent dark:to-violet-950/50 pointer-events-none" />
 
                   {/* Overlay content — switches based on state */}
                   <div className="relative z-10 text-center max-w-xs">
-                    <div className="w-14 h-14 mx-auto mb-6 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center">
-                      <img src="/leavora_logo.png" alt="Leavora" className="w-9 h-9 rounded-lg object-contain" />
-                    </div>
 
                     {isSignUp ? (
                       <>
-                        <h3 className="text-2xl font-bold text-white mb-3">Welcome Back!</h3>
-                        <p className="text-indigo-200/80 text-sm leading-relaxed mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Welcome Back!</h3>
+                        <p className="text-gray-600 dark:text-indigo-200/70 text-sm leading-relaxed mb-8">
                           Already have an account? Sign in to access your dashboard and manage your leaves.
                         </p>
                         <button
                           onClick={() => setIsSignUp(false)}
-                          className="inline-flex items-center gap-2 px-8 py-2.5 rounded-xl border-2 border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-all duration-200"
+                          className="inline-flex items-center gap-2 px-8 py-2.5 rounded-xl border-2 border-indigo-600/30 dark:border-white/25 
+                          text-indigo-700 dark:text-white text-sm font-semibold 
+                          hover:bg-indigo-600 hover:text-white hover:border-indigo-600 dark:hover:bg-white/10 dark:hover:border-white/40 transition-all duration-200"
                         >
                           SIGN IN <HiOutlineArrowRight className="w-4 h-4" />
                         </button>
                       </>
                     ) : (
                       <>
-                        <h3 className="text-2xl font-bold text-white mb-3">New Here?</h3>
-                        <p className="text-indigo-200/80 text-sm leading-relaxed mb-8">
+                        <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">New Here?</h3>
+                        <p className="text-gray-600 dark:text-indigo-200/70 text-sm leading-relaxed mb-8">
                           Create an account to get started with Leavora and streamline your leave management.
                         </p>
                         <button
                           onClick={() => setIsSignUp(true)}
-                          className="inline-flex items-center gap-2 px-8 py-2.5 rounded-xl border-2 border-white/30 text-white text-sm font-semibold hover:bg-white/10 transition-all duration-200"
+                          className="inline-flex items-center gap-2 px-8 py-2.5 rounded-xl border-2 border-indigo-600/30 dark:border-white/25 
+                          text-indigo-700 dark:text-white text-sm font-semibold 
+                          hover:bg-indigo-600 hover:text-white hover:border-indigo-600 dark:hover:bg-white/10 dark:hover:border-white/40 transition-all duration-200"
                         >
                           SIGN UP <HiOutlineArrowRight className="w-4 h-4" />
                         </button>

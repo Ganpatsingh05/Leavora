@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import DashboardLayout from './components/DashboardLayout';
+import LandingPage from './pages/LandingPage';
 import Login from './pages/Login';
 import EmployeeDashboard from './pages/EmployeeDashboard';
 import ApplyLeave from './pages/ApplyLeave';
@@ -10,6 +11,9 @@ import ManagerDashboard from './pages/ManagerDashboard';
 import AdminDashboard from './pages/AdminDashboard';
 import ManageUsers from './pages/ManageUsers';
 import AdminLeaveHistory from './pages/AdminLeaveHistory';
+import SubmitReimbursement from './pages/SubmitReimbursement';
+import ReimbursementHistory from './pages/ReimbursementHistory';
+import AdminReimbursements from './pages/AdminReimbursements';
 
 function App() {
   const { user, loading } = useAuth();
@@ -27,6 +31,9 @@ function App() {
 
   return (
     <Routes>
+      {/* Landing page */}
+      <Route path="/" element={<LandingPage />} />
+
       {/* Public routes */}
       <Route path="/login" element={user ? <Navigate to={user.role === 'admin' ? '/admin' : user.role === 'manager' ? '/manager' : '/dashboard'} /> : <Login />} />
       <Route path="/register" element={<Navigate to="/login" />} />
@@ -36,11 +43,14 @@ function App() {
         <Route path="/dashboard" element={<EmployeeDashboard />} />
         <Route path="/apply-leave" element={<ApplyLeave />} />
         <Route path="/leave-history" element={<LeaveHistory />} />
+        <Route path="/submit-reimbursement" element={<SubmitReimbursement />} />
+        <Route path="/reimbursement-history" element={<ReimbursementHistory />} />
       </Route>
 
       {/* Manager routes */}
       <Route element={<ProtectedRoute roles={['manager']}><DashboardLayout /></ProtectedRoute>}>
         <Route path="/manager" element={<ManagerDashboard />} />
+        <Route path="/manager/reimbursements" element={<AdminReimbursements />} />
       </Route>
 
       {/* Admin routes */}
@@ -50,10 +60,13 @@ function App() {
         <Route path="/admin/leaves" element={<AdminLeaveHistory />} />
         <Route path="/admin/apply-leave" element={<ApplyLeave />} />
         <Route path="/admin/my-leaves" element={<LeaveHistory />} />
+        <Route path="/admin/submit-reimbursement" element={<SubmitReimbursement />} />
+        <Route path="/admin/my-reimbursements" element={<ReimbursementHistory />} />
+        <Route path="/admin/reimbursements" element={<AdminReimbursements />} />
       </Route>
 
       {/* Catch all */}
-      <Route path="*" element={<Navigate to={user ? (user.role === 'admin' ? '/admin' : user.role === 'manager' ? '/manager' : '/dashboard') : '/login'} />} />
+      <Route path="*" element={<Navigate to={user ? (user.role === 'admin' ? '/admin' : user.role === 'manager' ? '/manager' : '/dashboard') : '/'} />} />
     </Routes>
   );
 }
